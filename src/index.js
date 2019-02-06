@@ -90,13 +90,17 @@ class LoadingInfiniteScroll extends PureComponent {
   render() {
     const {
       children,
+      query,
+      ...ReactInfiniteScrollerProps
+    } = this.props
+    const {
+      className,
       element,
       getScrollParent,
       hasMore,
       loader,
-      query,
-      useWindow
-    } = this.props
+      useWindow,
+    } = ReactInfiniteScrollerProps
     const { hasResetPage, resetCount, threshold } = this.state
     const queryParams = query.parse()
 
@@ -112,6 +116,7 @@ class LoadingInfiniteScroll extends PureComponent {
 
     return (
       <InfiniteScroll
+        className={className}
         element={element}
         getScrollParent={getScrollParent}
         hasMore={hasMore}
@@ -129,23 +134,17 @@ class LoadingInfiniteScroll extends PureComponent {
 }
 
 LoadingInfiniteScroll.defaultProps = {
-  element: "div",
-  getScrollParent: null,
-  hasMore: false,
   isLoading: false,
-  loader: null,
-  useWindow: false
+  ...InfiniteScroll.defaultProps
 }
+delete InfiniteScroll.defaultProps.loadMore
+
 
 LoadingInfiniteScroll.propTypes = {
-  children: PropTypes.node.isRequired,
-  element: PropTypes.string,
-  getScrollParent: PropTypes.func,
-  hasMore: PropTypes.bool,
   isLoading: PropTypes.bool,
-  loader: PropTypes.node,
   query: PropTypes.object.isRequired,
-  useWindow: PropTypes.bool,
+  ...InfiniteScroll.propTypes
 }
+delete LoadingInfiniteScroll.propTypes.loadMore
 
 export default withQueryRouter(LoadingInfiniteScroll)
