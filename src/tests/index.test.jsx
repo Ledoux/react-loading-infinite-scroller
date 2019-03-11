@@ -8,11 +8,17 @@ describe('RawLoadingInfiniteScroll', () => {
     it('should match snapshot', () => {
       // given
       const props = {
-        query: {},
+        query: {
+          parse: () => ({})
+        },
       }
 
       // when
-      const wrapper = shallow(<RawLoadingInfiniteScroll {...props} />)
+      const wrapper = shallow(
+        <RawLoadingInfiniteScroll {...props}>
+          <div />
+        </RawLoadingInfiniteScroll>
+      )
 
       // then
       expect(wrapper).toBeDefined()
